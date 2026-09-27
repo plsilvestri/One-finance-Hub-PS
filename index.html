@@ -1,24 +1,510 @@
-﻿<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>One Finance Hub</title><style>
-:root{--b:#082b68;--bl:#1769d2;--bg:#f5f7fb;--g:#159447;--r:#d92d20;--a:#e9820c;--m:#667085;--line:#e3e8f1}*{box-sizing:border-box}body{margin:0;background:#d9e0ea;font-family:Arial,sans-serif;color:#10203b}.app{max-width:430px;min-height:100vh;margin:auto;background:var(--bg)}header{position:sticky;top:0;z-index:5;background:#fff;padding:16px;border-bottom:1px solid var(--line)}.top{display:flex;align-items:center;justify-content:space-between}.avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--bl);color:white;font-weight:bold}.title{font-size:19px;font-weight:800}.search{margin-top:12px;border:1px solid var(--line);border-radius:14px;padding:12px;color:var(--m)}main{padding:16px 16px 94px}.screen{display:none}.screen.active{display:block}h1{font-size:23px;margin:5px 0}.sub{font-size:13px;color:var(--m)}.row{display:flex;align-items:center;justify-content:space-between}.period{padding:9px;border:1px solid var(--line);border-radius:11px;background:white}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.card{background:white;border:1px solid var(--line);border-radius:18px;box-shadow:0 6px 18px #173b7012}.kpi{padding:14px;min-height:164px;cursor:pointer}.name{font-size:13px;font-weight:800}.val{font-size:25px;font-weight:900;margin:14px 0 10px}.compare{display:grid;grid-template-columns:54px 1fr;gap:5px;font-size:12px;margin-top:5px}.compare b{font-size:13px}.up{color:var(--g)}.down{color:var(--r)}.warn{color:var(--a)}h2{font-size:17px;margin:23px 0 11px}.areas{display:grid;grid-template-columns:1fr 1fr;gap:9px}.area{padding:14px;min-height:82px;cursor:pointer}.area b{display:block;font-size:13px}.area small{color:var(--m)}.alerts{overflow:hidden}.alert{padding:13px;border-bottom:1px solid var(--line);font-size:13px;font-weight:700}.alert:last-child{border:0}.hero{padding:18px;color:white;background:linear-gradient(135deg,var(--b),var(--bl));border-radius:18px}.hero strong{display:block;font-size:31px;margin:8px 0}.back{border:0;background:#eaf2ff;border-radius:11px;padding:10px 14px;color:var(--b);font-size:18px}.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);max-width:430px;width:100%;display:grid;grid-template-columns:repeat(5,1fr);background:white;border-top:1px solid var(--line);padding:8px 4px}.nav button{border:0;background:transparent;padding:6px 1px;color:var(--m);font-size:10px}.nav button span{display:block;font-size:20px}.nav button.on{color:var(--bl);font-weight:bold}.list .card{padding:14px;margin-bottom:9px}.tool{display:flex;justify-content:space-between}.pill{font-size:10px;background:#eaf8ef;color:var(--g);padding:5px 7px;border-radius:20px}.note{margin-top:14px;padding:12px;background:#fff8e8;border:1px solid #f6d99b;border-radius:12px;font-size:12px;color:#76500a}
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>One Finance Hub</title>
+  <style>
+    :root {
+      --b: #082b68;
+      --bl: #1769d2;
+      --bg: #f5f7fb;
+      --g: #159447;
+      --r: #d92d20;
+      --a: #e9820c;
+      --m: #667085;
+      --line: #e3e8f1;
+      --white: #fff;
+    }
 
-.rev-total{padding:18px;background:linear-gradient(135deg,#071f53,#1769d2);color:#fff;border-radius:18px}.rev-total .big{font-size:34px;font-weight:900;margin:7px 0}.rev-total small{opacity:.85}.seg{padding:13px;margin-bottom:9px}.seg-top{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end}.seg b{font-size:14px}.seg .num{font-size:20px;font-weight:900}.seg small{color:var(--m)}.track{height:8px;background:#e8edf5;border-radius:9px;overflow:hidden;margin-top:9px}.track i{display:block;height:100%;background:var(--bl);border-radius:9px}.market-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.market{padding:13px}.market strong{display:block;font-size:19px;margin:7px 0}.meta{display:flex;gap:7px;overflow:auto;margin:12px 0}.tag{white-space:nowrap;background:#fff;border:1px solid var(--line);padding:7px 10px;border-radius:20px;font-size:11px;color:var(--m)}
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: #d9e0ea;
+      font-family: Arial, sans-serif;
+      color: #10203b;
+    }
 
-.toggle{display:grid;grid-template-columns:1fr 1fr;background:#e8edf5;border-radius:12px;padding:3px;margin:12px 0}.toggle button{border:0;background:transparent;padding:9px;border-radius:9px;color:var(--m);font-weight:800}.toggle button.active{background:#fff;color:var(--b);box-shadow:0 2px 7px #173b7020}.metric-row{padding:14px;margin-bottom:9px}.metric-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.metric-head strong{font-size:21px}.metric-row small{color:var(--m)}.dual{display:flex;gap:7px;margin-top:8px;font-size:12px}.dual span{padding:5px 8px;border-radius:20px;background:#f2f5f9}.chart{padding:14px}.bars{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;height:150px;align-items:end;margin-top:14px}.pair{height:120px;display:flex;gap:3px;align-items:end;justify-content:center}.pair i{width:9px;background:#52575c;border-radius:3px 3px 0 0}.pair i:nth-child(2){background:#9db5dc}.lab{text-align:center;font-size:9px;color:var(--m);margin-top:5px}.legend{font-size:11px;color:var(--m);text-align:right}.region{padding:12px;margin-bottom:8px}.region-top{display:flex;justify-content:space-between;font-size:12px}.region .track{margin-top:7px}.section-note{font-size:12px;color:var(--m);margin:-5px 0 10px}
+    .app {
+      max-width: 430px;
+      min-height: 100vh;
+      margin: 0 auto;
+      background: var(--bg);
+      position: relative;
+      padding-bottom: 78px;
+    }
 
-.note-btn{width:100%;border:0;background:linear-gradient(135deg,#071f53,#1769d2);color:#fff;padding:13px 15px;border-radius:13px;font-weight:850;box-shadow:0 7px 18px #1769d230;cursor:pointer;margin:12px 0}.narrative{display:none;padding:16px;margin:10px 0 18px;border-left:5px solid #1769d2}.narrative.show{display:block;animation:fadeIn .25s ease}.narrative h3{margin:0 0 9px;font-size:16px}.narrative p{font-size:13px;line-height:1.55;margin:8px 0}.narrative ul{padding-left:19px;margin:8px 0}.narrative li{font-size:12px;line-height:1.5;margin:5px 0}.narrative .conclusion{background:#eef5ff;padding:10px;border-radius:10px;font-weight:750}.copy-btn{border:1px solid #cad7ea;background:#fff;color:#1769d2;border-radius:9px;padding:8px 11px;font-weight:750;cursor:pointer}@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
-</style></head><body><div class="app"><header><div class="top"><div class="avatar">MN</div><div class="title" id="title">One Finance Hub</div><div>🔔 ⚙️</div></div><div class="search">⌕ Cerca KPI, progetto, report, tool...</div></header><main>
-<section id="home" class="screen active"><div class="row"><div><h1>Buongiorno, user</h1><div class="sub">Panoramica Group · Dati dimostrativi</div></div><select class="period"><option>FY2026</option><option>Q3 2026</option></select></div><div class="grid">
-<div class="card kpi" onclick="go('revenues')"><div class="name">Revenue</div><div class="val">496,7 B¥</div><div class="compare"><span>vs LY</span><b class="warn">n.d.</b><span>vs Budget</span><b class="up">▲ +6,1%</b></div></div>
-<div class="card kpi" onclick="go('kpi')"><div class="name">EBIT</div><div class="val">—</div><div class="compare"><span>vs LY</span><b class="down">▼ -0,8%</b><span>vs Budget</span><b class="down">▼ -3,5%</b></div></div>
-<div class="card kpi" onclick="go('kpi')"><div class="name">Orders Intake</div><div class="val">—</div><div class="compare"><span>vs LY</span><b class="up">▲ +8,5%</b><span>vs Budget</span><b class="up">▲ +4,2%</b></div></div>
-<div class="card kpi" onclick="go('kpi')"><div class="name">Backlog</div><div class="val">—</div><div class="compare"><span>vs LY</span><b class="up">▲ +12,3%</b><span>vs Budget</span><b class="up">▲ +6,1%</b></div></div></div>
-<h2>Aree principali</h2><div class="areas"><div class="card area" onclick="go('revenues')"><b>📊 Ricavi</b><small>Performance Management</small></div><div class="card area" onclick="go('projects')"><b>🚆 Project Controlling</b><small>Portfolio progetti</small></div><div class="card area"><b>💰 Treasury</b><small>Cash, FX, liquidità</small></div><div class="card area" onclick="go('executive')"><b>⚠️ Risk &amp; Opportunity</b><small>Rischi e azioni</small></div></div><h2>Alert principali</h2><div class="card alerts"><div class="alert">🔴 3 progetti con margine &lt; 2%</div><div class="alert">🟠 APAC EBIT sotto Budget</div><div class="alert">🟡 Cash conversion Europe sotto target</div></div><div class="note">Nota: tutti i valori sono dimostrativi. La Home ora espone entrambe le varianze, vs LY e vs Budget.</div></section>
-<section id="revenues" class="screen"><button class="back" onclick="go('home')">‹</button><h1>Ricavi</h1><div class="sub">Actual vs Budget · Aug 26 · FY2026 · Currency B¥</div><div class="meta"><span class="tag">Month: Aug 26</span><span class="tag">FY: 2026</span><span class="tag">Legal Entity: Western</span></div><div class="rev-total"><small>Revenues</small><div class="big">496,7 B¥</div><div>Budget 468,2 B¥ · <b>+28,4 B¥ · +6,1%</b></div></div><h2>Ricavi per Line of Business</h2><div class="card seg"><div class="seg-top"><div><b>Vehicles</b><small>Budget 183,2 · +5,6</small></div><div class="num">188,8</div></div><div class="track"><i style="width:38%;background:#143d68"></i></div><div class="up">▲ +3,1% vs Budget</div></div><div class="card seg" onclick="go('railcontrol')" style="cursor:pointer;border-color:#3f86ce"><div class="seg-top"><div><b>Rail Control <span style="color:#1769d2">›</span></b><small>Budget 131,8 · +5,1 · Tocca per dettaglio</small></div><div class="num">136,9</div></div><div class="track"><i style="width:28%;background:#3f86ce"></i></div><div class="up">▲ +3,9% vs Budget</div></div><div class="card seg"><div class="seg-top"><div><b>Digital</b><small>Budget 0,0</small></div><div class="num">5,5</div></div><div class="track"><i style="width:3%;background:#a8badd"></i></div><div class="up">▲ +5,5 B¥ vs Budget</div></div><div class="card seg"><div class="seg-top"><div><b>GTS</b><small>Budget 153,3 · +12,2</small></div><div class="num">165,5</div></div><div class="track"><i style="width:33%;background:#626973"></i></div><div class="up">▲ +8,0% vs Budget</div></div><h2>Ricavi per mercato</h2><div class="market-grid"><div class="card market"><small>North America</small><strong>47,5</strong><span class="up">+0,1%</span></div><div class="card market"><small>EMEA</small><strong>146,2</strong><span class="up">+10,0%</span></div><div class="card market"><small>Americas</small><strong>12,1</strong><span class="down">-41,0%</span></div><div class="card market"><small>Italy</small><strong>151,9</strong><span class="up">+5,3%</span></div><div class="card market"><small>UK</small><strong>85,0</strong><span class="up">+28,8%</span></div><div class="card market"><small>Japan</small><strong>0,0</strong><span class="down">-80,3%</span></div><div class="card market"><small>Asia</small><strong>53,9</strong><span class="down">-5,4%</span></div></div><div class="note">Dati trascritti dalla schermata fornita. Dove il confronto vs LY non è visibile, il mockup indica “n.d.” invece di stimare il valore.</div></section>
-<section id="railcontrol" class="screen"><button class="back" onclick="go('revenues')">‹</button><h1>Rail Control</h1><div class="sub">EBAx by LoB · Aug 26 · FY2026 · Currency B¥</div><div class="meta"><span class="tag">LoB: Rail Control</span><span class="tag">Scenario: ACT vs BDG</span><span class="tag">Segment: All</span></div><div class="rev-total"><small>Revenues · Aug 26</small><div class="big">302,4 B¥</div><div>Budget 285,1 B¥ · <b>+17,3 B¥ · +6,1%</b></div></div><div class="toggle"><button class="active" onclick="periodView(this,'month')">Aug 26</button><button onclick="periodView(this,'fy')">AsOf01 vs ACT</button></div><h2>Performance economica</h2><div id="monthMetrics"><div class="card metric-row"><div class="metric-head"><div><b>Orders</b><small>Budget 284,8</small></div><strong class="up">462,6</strong></div><div class="dual"><span class="up">+177,8</span><span class="up">+62,4%</span></div></div><div class="card metric-row"><div class="metric-head"><div><b>Gross Margin</b><small>Budget 57,0</small></div><strong class="up">67,6</strong></div><div class="dual"><span class="up">+10,6</span><span class="up">+18,6%</span></div></div><div class="card metric-row"><div class="metric-head"><div><b>EBAx</b><small>Budget 39,0</small></div><strong class="up">48,2</strong></div><div class="dual"><span class="up">+9,3</span><span class="up">+23,7%</span></div></div><div class="card metric-row"><div class="metric-head"><div><b>Backlog</b><small>Budget 2.706,2</small></div><strong class="up">3.074,9</strong></div><div class="dual"><span class="up">+368,7</span><span class="up">+13,6%</span></div></div><div class="card metric-row"><div class="metric-head"><div><b>Invoices</b><small>Budget 249,9</small></div><strong class="up">299,5</strong></div><div class="dual"><span class="up">+49,6</span><span class="up">+19,9%</span></div></div></div><div id="fyMetrics" style="display:none"><div class="card metric-row"><div class="metric-head"><div><b>Orders</b><small>Vs 848,6</small></div><strong class="up">961,0</strong></div><div class="dual"><span class="up">+112,4</span><span class="up">+13,2%</span></div></div><div class="card metric-row"><div class="metric-head"><div><b>Revenues</b><small>Vs 742,9</small></div><strong class="up">796,5</strong></div><div class="dual"><span class="up">+53,6</span><span class="up">+7,2%</span></div></div><div class="card metric-row"><div class="metric-head"><div><b>Gross Margin</b><small>Vs 162,0</small></div><strong class="up">177,0</strong></div><div class="dual"><span class="up">+15,0</span><span class="up">+9,2%</span></div></div><div class="card metric-row"><div class="metric-head"><div><b>EBAx</b><small>Vs 116,0</small></div><strong class="up">131,6</strong></div><div class="dual"><span class="up">+15,6</span><span class="up">+13,5%</span></div></div><div class="card metric-row"><div class="metric-head"><div><b>Invoices</b><small>Vs 798,1</small></div><strong class="down">780,4</strong></div><div class="dual"><span class="down">-17,7</span><span class="down">-2,2%</span></div></div></div><h2>Weight % on Revenues</h2><div class="card chart"><div class="legend">■ ACT &nbsp; <span style="color:#9db5dc">■ BDG</span></div><div class="bars"><div><div class="pair"><i style="height:100%"></i><i style="height:90%"></i></div><div class="lab">GM<br>22,3/20,0</div></div><div><div class="pair"><i style="height:3%"></i><i style="height:1%"></i></div><div class="lab">U/O<br>-0,6/-0,1</div></div><div><div class="pair"><i style="height:12%"></i><i style="height:12%"></i></div><div class="lab">R&amp;D<br>-2,6/-2,7</div></div><div><div class="pair"><i style="height:8%"></i><i style="height:9%"></i></div><div class="lab">Bidding<br>-1,7/-1,9</div></div><div><div class="pair"><i style="height:7%"></i><i style="height:7%"></i></div><div class="lab">Sales<br>-1,5/-1,6</div></div><div><div class="pair"><i style="height:72%"></i><i style="height:61%"></i></div><div class="lab">EBAx<br>16,0/13,7</div></div></div></div><button class="note-btn" onclick="generateNarrative()">✦ Note · Genera narrative EBAx</button><div id="ebaxNarrative" class="card narrative"><h3>Narrative automatica · EBAx margin</h3><p><b>EBAx margin Actual: 16,0%</b> rispetto al <b>Budget: 13,7%</b>, con una variazione positiva di <b>+2,3 punti percentuali</b>.</p><ul><li><b>Gross Margin:</b> 22,3% vs 20,0%, contributo positivo di <b>+2,3 pp</b>. È il principale driver del miglioramento.</li><li><b>U/O:</b> -0,6% vs -0,1%, impatto negativo di <b>-0,5 pp</b>, che assorbe parte del beneficio del Gross Margin.</li><li><b>R&amp;D:</b> -2,6% vs -2,7%, contributo positivo di circa <b>+0,1 pp</b>.</li><li><b>Bidding:</b> -1,7% vs -1,9%, contributo positivo di circa <b>+0,2 pp</b>.</li><li><b>Sales:</b> -1,5% vs -1,6%, contributo positivo di circa <b>+0,1 pp</b>.</li></ul><p class="conclusion">In sintesi, la sovraperformance dell’EBAx margin è guidata dal maggiore Gross Margin e da una minore incidenza di R&amp;D, Bidding e Sales. Il peggioramento U/O compensa parzialmente tali benefici. La somma dei contributi arrotondati è circa +2,2 pp, mentre il delta EBAx visualizzato è +2,3 pp; la differenza di 0,1 pp è coerente con arrotondamenti o componenti non dettagliate nella vista.</p><button class="copy-btn" onclick="copyNarrative()">Copia narrative</button></div><h2>Ricavi per regione</h2><div class="section-note">Valori assoluti ACT / Budget</div><div class="card region"><div class="region-top"><b>Northern &amp; Central Europe</b><span>79,9 / 73,4</span></div><div class="track"><i style="width:100%"></i></div></div><div class="card region"><div class="region-top"><b>Asia Pacific</b><span>53,3 / 56,7</span></div><div class="track"><i style="width:67%"></i></div></div><div class="card region"><div class="region-top"><b>Italy</b><span>41,2 / 30,5</span></div><div class="track"><i style="width:52%;background:var(--green)"></i></div></div><div class="card region"><div class="region-top"><b>Southern Europe &amp; LatAm</b><span>38,9 / 47,4</span></div><div class="track"><i style="width:49%;background:var(--r)"></i></div></div><div class="card region"><div class="region-top"><b>North America</b><span>36,2 / 36,6</span></div><div class="track"><i style="width:45%"></i></div></div><div class="card region"><div class="region-top"><b>MEA</b><span>35,9 / 27,0</span></div><div class="track"><i style="width:45%;background:var(--green)"></i></div></div><div class="card region"><div class="region-top"><b>UK</b><span>17,0 / 13,4</span></div><div class="track"><i style="width:21%;background:var(--green)"></i></div></div><div class="note">Dati trascritti dalla schermata allegata. Il layout mobile sostituisce i grafici desktop molto densi con card, confronti ACT/BDG e barre leggibili.</div></section>
-<section id="kpi" class="screen"><button class="back" onclick="go('home')">‹</button><h1>KPI Dashboard</h1><div class="hero">Revenue FY2026<strong>496,7 B¥</strong>▲ 3,5% vs LY · ▼ 1,2% vs Budget</div><h2>Indicatori</h2><div class="list"><div class="card">EBIT €780 M · -0,8% LY · -3,5% Budget</div><div class="card">OCF €420 M · +5,1% LY · +1,4% Budget</div><div class="card">Orders €9,1 B · +8,5% LY · +4,2% Budget</div></div></section>
-<section id="projects" class="screen"><button class="back" onclick="go('home')">‹</button><h1>Project Portfolio</h1><div class="hero">Portfolio complessivo<strong>6.000</strong>Progetti attivi nel perimetro Group</div><h2>Priorità</h2><div class="list"><div class="card">🔴 Project Roma · Margine 1,8%</div><div class="card">🟠 Project Riyadh · CTC sopra piano</div><div class="card">🟠 Project Sydney · Milestone da monitorare</div></div></section>
-<section id="executive" class="screen"><button class="back" onclick="go('home')">‹</button><h1>Executive Cockpit</h1><div class="hero">Performance snapshot<strong>4 Green · 1 Red</strong>Vista sintetica per il management</div><h2>Management insights</h2><div class="list"><div class="card">📉 Margin erosion · 3 escalation</div><div class="card">⚙️ Supply chain risk</div><div class="card">⇄ FX exposure</div></div></section>
-<section id="menu" class="screen"><button class="back" onclick="go('home')">‹</button><h1>Menu &amp; Tool Hub</h1><div class="list"><div class="card tool" onclick="go('revenues')"><b>Revenue Dashboard</b><span class="pill">NEW</span></div><div class="card tool"><b>OneStream</b><span class="pill">STRATEGIC</span></div><div class="card tool"><b>Power BI</b><span class="pill">STRATEGIC</span></div><div class="card tool"><b>SAP S/4</b><span class="pill">STRATEGIC</span></div><div class="card tool"><b>Dataverse</b><span class="pill">STRATEGIC</span></div></div></section>
-</main><nav class="nav"><button data-id="home" class="on" onclick="go('home')"><span>⌂</span>Home</button><button data-id="revenues" onclick="go('revenues')"><span>▥</span>Ricavi</button><button data-id="projects" onclick="go('projects')"><span>🚆</span>Projects</button><button data-id="executive" onclick="go('executive')"><span>⌁</span>Executive</button><button data-id="menu" onclick="go('menu')"><span>☰</span>Menu</button></nav></div><script>
-const names={home:'One Finance Hub',revenues:'Ricavi',railcontrol:'Rail Control',kpi:'KPI Dashboard',projects:'Project Portfolio',executive:'Executive Cockpit',menu:'Menu & Tool Hub'};function go(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('on',x.dataset.id===id));document.getElementById('title').textContent=names[id];scrollTo(0,0);location.hash=id}function generateNarrative(){const n=document.getElementById('ebaxNarrative');n.classList.toggle('show');if(n.classList.contains('show'))n.scrollIntoView({behavior:'smooth',block:'center'})}function copyNarrative(){const n=document.getElementById('ebaxNarrative');const text=n.innerText.replace('Copia narrative','').trim();if(navigator.clipboard){navigator.clipboard.writeText(text).then(()=>alert('Narrative copiata negli appunti'))}else{alert('Seleziona e copia il testo della narrative')}}function periodView(btn,id){btn.parentElement.querySelectorAll('button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');document.getElementById('monthMetrics').style.display=id==='month'?'block':'none';document.getElementById('fyMetrics').style.display=id==='fy'?'block':'none'}let h=location.hash.slice(1);if(names[h])go(h);
-</script></body></html>
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: #fff;
+      padding: 16px 16px 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--bl);
+      color: white;
+      font-weight: 900;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .title {
+      flex: 1;
+      font-size: 19px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .search {
+      position: relative;
+      margin-top: 12px;
+    }
+
+    .search input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 14px;
+      background: white;
+      color: var(--m);
+      font-size: 14px;
+      outline: none;
+    }
+
+    .search-results {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,.08);
+      overflow: hidden;
+      z-index: 10;
+    }
+
+    .search-results .sr {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      color: #1b2d4f;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .search-results .sr:last-child { border-bottom: 0; }
+    .search-results .sr:hover { background: #f0f6ff; }
+
+    main { padding: 16px; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin: 0;
+    }
+
+    .sub {
+      font-size: 13px;
+      color: var(--m);
+      margin-top: 4px;
+    }
+
+    .period {
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: white;
+      padding: 9px 10px;
+      color: #1b2d4f;
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: 0 4px 12px rgba(16,32,59,.04);
+    }
+
+    .kpi .name { font-size: 13px; color: var(--m); }
+    .kpi .val {
+      font-size: 25px;
+      font-weight: 900;
+      margin: 10px 0;
+    }
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 4px 8px;
+      font-size: 12px;
+      color: var(--m);
+    }
+    .compare b { font-size: 13px; }
+    .up { color: var(--g); }
+    .down { color: var(--r); }
+    .warn { color: var(--a); }
+
+    .areas {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .area {
+      min-height: 82px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .area b { display: block; font-size: 15px; }
+    .area small { color: var(--m); }
+
+    h2 {
+      margin: 18px 0 10px;
+      font-size: 18px;
+    }
+
+    .back {
+      border: 0;
+      background: #eaf2ff;
+      color: var(--b);
+      padding: 10px 14px;
+      border-radius: 11px;
+      font-size: 18px;
+      font-weight: 900;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #071f53, #1769d2);
+      color: white;
+      padding: 18px;
+      border-radius: 18px;
+      margin-bottom: 18px;
+      line-height: 1.4;
+    }
+    .hero strong {
+      display: block;
+      font-size: 31px;
+      margin: 8px 0;
+    }
+
+    .list { display: grid; gap: 10px; }
+    .tool {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 12px 14px;
+    }
+
+    .pill {
+      font-size: 10px;
+      background: #eaf8ef;
+      color: var(--g);
+      border-radius: 20px;
+      padding: 5px 8px;
+      white-space: nowrap;
+    }
+
+    .nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 430px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      background: white;
+      border-top: 1px solid var(--line);
+      padding: 8px 4px;
+    }
+
+    .nav button {
+      border: 0;
+      background: transparent;
+      color: var(--m);
+      font-size: 10px;
+      padding: 8px 6px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .nav button.on {
+      color: var(--b);
+      font-weight: 800;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="top">
+        <div class="avatar">MR</div>
+        <div class="title" id="title">One Finance Hub</div>
+        <div>🔔 ⚙️</div>
+      </div>
+
+      <div class="search">
+        <input type="search" id="searchInput" placeholder="⌕ Cerca..." aria-label="Cerca" />
+        <div id="searchResults" class="search-results" hidden></div>
+      </div>
+    </header>
+
+    <main>
+      <section id="home" class="screen active">
+        <div class="row">
+          <div>
+            <h1>Buongiorno, user</h1>
+            <div class="sub">Panoramica Group · Dati dimostrativi</div>
+          </div>
+          <select class="period">
+            <option>FY2026</option>
+            <option>FY2025</option>
+          </select>
+        </div>
+
+        <div class="grid">
+          <div class="card kpi" onclick="go('revenues')">
+            <div class="name">Revenue</div>
+            <div class="val">496,7 B¥</div>
+            <div class="compare">
+              <span>vs LY</span><b class="warn">n.d.</b>
+              <span>vs Budget</span><b class="up">▲ 6,1%</b>
+            </div>
+          </div>
+
+          <div class="card kpi" onclick="go('kpi')">
+            <div class="name">EBIT</div>
+            <div class="val">—</div>
+            <div class="compare">
+              <span>vs LY</span><b class="down">▼ -0,8%</b>
+              <span>vs Budget</span><b class="down">▼ -3,5%</b>
+            </div>
+          </div>
+
+          <div class="card kpi" onclick="go('kpi')">
+            <div class="name">Orders Intake</div>
+            <div class="val">—</div>
+            <div class="compare">
+              <span>vs LY</span><b class="up">▲ +8,5%</b>
+              <span>vs Budget</span><b class="up">▲ +4,2%</b>
+            </div>
+          </div>
+
+          <div class="card kpi" onclick="go('kpi')">
+            <div class="name">Backlog</div>
+            <div class="val">—</div>
+            <div class="compare">
+              <span>vs LY</span><b class="up">▲ +12,3%</b>
+              <span>vs Budget</span><b class="up">▲ +6,1%</b>
+            </div>
+          </div>
+        </div>
+
+        <h2>Aree principali</h2>
+        <div class="areas">
+          <div class="card area" onclick="go('revenues')"><b>📊 Ricavi</b><small>Performance Management</small></div>
+          <div class="card area" onclick="go('projects')"><b>📁 Progetti</b><small>Portfolio progetti</small></div>
+          <div class="card area" onclick="go('executive')"><b>📈 Executive</b><small>Risk & opportunity</small></div>
+          <div class="card area" onclick="go('railcontrol')"><b>🚆 Rail Control</b><small>EBAx by LoB</small></div>
+        </div>
+      </section>
+
+      <section id="revenues" class="screen">
+        <button class="back" onclick="go('home')">‹</button>
+        <h1>Ricavi</h1>
+        <div class="sub">Actual vs Budget · Aug 26 · FY2026 · Currency B¥</div>
+        <div class="hero">
+          Revenue FY2026<strong>496,7 B¥</strong>
+          ▲ 3,5% vs LY · ▼ 1,2% vs Budget
+        </div>
+      </section>
+
+      <section id="railcontrol" class="screen">
+        <button class="back" onclick="go('home')">‹</button>
+        <h1>Rail Control</h1>
+        <div class="sub">EBAx by LoB · Aug 26 · FY2026 · Currency B¥</div>
+        <div class="hero">
+          EBITDA margin<strong>18,4%</strong>
+          +1,2 pp vs budget
+        </div>
+      </section>
+
+      <section id="kpi" class="screen">
+        <button class="back" onclick="go('home')">‹</button>
+        <h1>KPI Dashboard</h1>
+        <div class="hero">Revenue FY2026<strong>496,7 B¥</strong>▲ 3,5% vs LY · ▼ 1,2% vs Budget</div>
+        <div class="list">
+          <div class="card tool"><b>EBIT</b><span class="pill">-0,8%</span></div>
+          <div class="card tool"><b>Orders Intake</b><span class="pill">+8,5%</span></div>
+          <div class="card tool"><b>Backlog</b><span class="pill">+12,3%</span></div>
+        </div>
+      </section>
+
+      <section id="projects" class="screen">
+        <button class="back" onclick="go('home')">‹</button>
+        <h1>Project Portfolio</h1>
+        <div class="hero">Portfolio complessivo<strong>6.000</strong>Progetti attivi nel periodo</div>
+        <div class="list">
+          <div class="card tool"><b>Project Rome</b><span class="pill">Green</span></div>
+          <div class="card tool"><b>Project Sydney</b><span class="pill">Watch</span></div>
+          <div class="card tool"><b>Project Paris</b><span class="pill">Stable</span></div>
+        </div>
+      </section>
+
+      <section id="executive" class="screen">
+        <button class="back" onclick="go('home')">‹</button>
+        <h1>Executive Cockpit</h1>
+        <div class="hero">Performance snapshot<strong>4 Green · 1 Red</strong>Vista sintetica per il management</div>
+        <div class="list">
+          <div class="card tool"><b>Margin evolution</b><span class="pill">+3%</span></div>
+          <div class="card tool"><b>Supply chain risk</b><span class="pill">Low</span></div>
+          <div class="card tool"><b>Cash coverage</b><span class="pill">AA</span></div>
+        </div>
+      </section>
+
+      <section id="menu" class="screen">
+        <button class="back" onclick="go('home')">‹</button>
+        <h1>Menu &amp; Tool Hub</h1>
+        <div class="list">
+          <div class="card tool" onclick="go('revenues')"><b>Revenue Dashboard</b><span class="pill">NEW</span></div>
+          <div class="card tool" onclick="go('railcontrol')"><b>Rail Control</b><span class="pill">LIVE</span></div>
+          <div class="card tool" onclick="go('projects')"><b>Project Portfolio</b><span class="pill">TOOLS</span></div>
+          <div class="card tool" onclick="go('executive')"><b>Executive Cockpit</b><span class="pill">KPI</span></div>
+        </div>
+      </section>
+    </main>
+
+    <nav class="nav">
+      <button data-id="home" class="on" onclick="go('home')"><span>⌂</span>Home</button>
+      <button data-id="revenues" onclick="go('revenues')"><span>▥</span>Ricavi</button>
+      <button data-id="projects" onclick="go('projects')"><span>▣</span>Progetti</button>
+      <button data-id="executive" onclick="go('executive')"><span>◫</span>Exec</button>
+      <button data-id="menu" onclick="go('menu')"><span>☰</span>Menu</button>
+    </nav>
+  </div>
+
+  <script>
+    const names = {
+      home: 'One Finance Hub',
+      revenues: 'Ricavi',
+      railcontrol: 'Rail Control',
+      kpi: 'KPI Dashboard',
+      projects: 'Project Portfolio',
+      executive: 'Executive Cockpit',
+      menu: 'Menu & Tool Hub'
+    };
+
+    const searchItems = [
+      { id: 'home', label: 'Home' },
+      { id: 'revenues', label: 'Ricavi' },
+      { id: 'railcontrol', label: 'Rail Control' },
+      { id: 'kpi', label: 'KPI Dashboard' },
+      { id: 'projects', label: 'Project Portfolio' },
+      { id: 'executive', label: 'Executive Cockpit' },
+      { id: 'menu', label: 'Menu & Tool Hub' }
+    ];
+
+    function go(id) {
+      document.querySelectorAll('.screen').forEach(screen => {
+        screen.classList.toggle('active', screen.id === id);
+      });
+
+      document.querySelectorAll('.nav button').forEach(button => {
+        const isActive = button.dataset.id === id;
+        button.classList.toggle('on', isActive);
+      });
+
+      const title = document.getElementById('title');
+      if (title && names[id]) title.textContent = names[id];
+      window.location.hash = id;
+    }
+
+    const input = document.getElementById('searchInput');
+    const results = document.getElementById('searchResults');
+
+    input.addEventListener('input', () => {
+      const q = input.value.trim().toLowerCase();
+      if (!q) {
+        results.hidden = true;
+        results.innerHTML = '';
+        return;
+      }
+
+      const matches = searchItems.filter(item =>
+        item.label.toLowerCase().includes(q) || item.id.toLowerCase().includes(q)
+      );
+
+      results.innerHTML = matches.map(item =>
+        `<div class="sr" data-id="${item.id}">${item.label}</div>`
+      ).join('');
+
+      results.hidden = matches.length === 0;
+    });
+
+    results.addEventListener('click', (event) => {
+      const item = event.target.closest('.sr');
+      if (!item) return;
+      const id = item.dataset.id;
+      go(id);
+      input.value = '';
+      results.hidden = true;
+      results.innerHTML = '';
+    });
+
+    input.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        const first = results.querySelector('.sr');
+        if (first) {
+          const id = first.dataset.id;
+          go(id);
+          input.value = '';
+          results.hidden = true;
+          results.innerHTML = '';
+        }
+      }
+    });
+
+    const initial = location.hash ? location.hash.slice(1) : 'home';
+    if (names[initial]) go(initial);
+  </script>
+</body>
+</html>
